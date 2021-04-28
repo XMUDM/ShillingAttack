@@ -1,21 +1,26 @@
-# Paper
+# Algorithms for Shilling Attacks against Recommender Systems
 
-This is the code repository for AUSH: a GAN-based RS attacking framework  
+This repository contains our implementations for Shilling Attacks against Recommender Systems. Currently, it includes one shilling attack algorithm, AUSH, published in the following paper [[Arxiv Preprint](https://arxiv.org/abs/2005.08164)]:
 
-Please kindly cite our paper:
+> Chen Lin, Si Chen, Hui Li, Yanghua Xiao, Lianyun Li, and Qian Yang. 2020. Attacking Recommender Systems with Augmented User Profiles. In CIKM. 855–864.
 
-@inproceedings{Lin2020Attacking,
-author = {Lin, Chen and Chen, Si and Li, Hui and Xiao, Yanghua and Li, Lianyun and Yang, Qian},
-title = {Attacking Recommender Systems with Augmented User Profiles},
-year = {2020},
-booktitle = {Proceedings of the 29th ACM International Conference on Information & Knowledge Management},
-pages = {855–864},
-location = {Virtual Event, Ireland},
-series = {CIKM '20}
-}
+Please kindly cite our paper if you use it:
 
+    @inproceedings{Lin2020Attacking,  
+	  author    = {Chen Lin and
+	               Si Chen and
+	               Hui Li and
+	               Yanghua Xiao and
+	               Lianyun Li and
+	               Qian Yang},
+	  title     = {Attacking Recommender Systems with Augmented User Profiles},
+	  booktitle = {{CIKM}},
+	  pages     = {855--864},
+	  year      = {2020}
+    }  
 
-### step1:Pre-processing
+## How to run AUSH.
+### step1: Pre-processing
 test_main\data_preprocess.py transforms amazon 5cores ratings to tuples [userid,itemid, normalized float rating]
 
 ### step2: Initialize
@@ -26,7 +31,7 @@ test_main\data_preprocess.py
  - selected items and target users
  - settings for bandwagon attack
 
-### step3. Training
+### step3: Training
 
  - baseline attack models
  ```shell script
