@@ -20,10 +20,10 @@ Please kindly cite our paper if you use it:
     }  
 
 ## How to run AUSH.
-### step1: Pre-processing
-test_main\data_preprocess.py transforms amazon 5cores ratings to tuples [userid,itemid, normalized float rating]
+### Step1: Pre-processing
+`test_main\data_preprocess.py` transforms amazon 5-cores ratings to tuples `[userid, itemid, normalized float rating]`.
 
-### step2: Initialize
+### Step2: Initialize
 test_main\data_preprocess.py
  - select attack target
  - select attack number (default fix 50)
@@ -31,13 +31,13 @@ test_main\data_preprocess.py
  - selected items and target users
  - settings for bandwagon attack
 
-### step3: Training
+### Step3: Training and Evaluation
 
- - baseline attack models
+ - Train baseline attack models
  ```shell script
 python main_baseline_attack.py --dataset filmTrust --attack_methods average,segment,random,bandwagon --targets 601,623,619,64,558 --filler_num 36 --bandwagon_selected 103,98,115 --sample_filler 1
 ```
- - evaluation
+ - Evaluate baseline attack models
  ```shell script
 python main_train_rec.py --dataset filmTrust --attack_method segment --model_name NMF_25 --target_ids 601,623,619,64,558 --filler_num 36
 ````
@@ -47,12 +47,12 @@ python main_train_rec.py --dataset filmTrust --attack_method segment --model_nam
 python main_train_rec.py --dataset filmTrust --attack_method no --model_name NMF_25 --target_ids 601,623,619,64,558 --filler_num 36
 ````
 
- - training AUSH
+ - Train AUSH
  ```shell script
 python main_gan_attack.py --dataset filmTrust --target_ids 601,623,619,64,558 --filler_num 36
 ````
 
- - Evluation (AUSH)
+ - Evaluate AUSH
  ```shell script
 python main_train_rec.py --dataset filmTrust --attack_method gan --model_name NMF_25 --target_ids 601,623,619,64,558 --filler_num 36
 ````
