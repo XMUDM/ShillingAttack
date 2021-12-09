@@ -25,7 +25,7 @@ Please kindly cite our paper if you use it:
 ### Step1: Pre-processing
 Use `test_main\data_preprocess.py` to transform amazon 5-cores ratings to tuples `[userid, itemid, normalized float rating]`.
 
-Update on Dec 9, 2021: We have released several recommendation datasets for testing shilling attacks including the three datasets used in our CIKM'20 paper. You can direcetly use files in the [Data](/Data) folder for experiments.
+Update on Dec 9, 2021: We have released several recommendation datasets for testing shilling attacks including the three datasets used in our CIKM'20 paper. You can directly use files in the [data](/data) folder for experiments. Please copy the data folder to the folder of AUSH before execution.
 
 ### Step2: Initialize
 Use `test_main\data_preprocess.py`

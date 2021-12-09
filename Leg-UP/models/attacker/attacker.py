@@ -77,8 +77,8 @@ class Attacker(object):
         parser.add_argument('--target_id', type=int, default=62)  # , required=True)
         parser.add_argument('--attack_num', type=int, default=50)  # )
         # ml100k:90/automotive:4
-        parser.add_argument('--filler_num', type=int, default=90)  # , required=True)
-        parser.add_argument('--cuda_id', type=int, default=1)  # , required=True)
+        parser.add_argument('--filler_num', type=int, default=36)  # , required=True)
+        parser.add_argument('--cuda_id', type=int, default=0)  # , required=True)
         #
         # parser.add_argument('--injected_path', type=str,
         #                     default='./results/data_attacked/ml100k/ml100k_attack_62.data')  # , required=True)

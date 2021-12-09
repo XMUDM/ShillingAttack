@@ -35,7 +35,7 @@ class Run:
         parser.add_argument('--attack_num', type=int, default=50)
         parser.add_argument('--filler_num', type=int, default=36)
         parser.add_argument('--cuda_id', type=int, default=3)
-        parser.add_argument('--use_cuda', type=int, default=1)
+        parser.add_argument('--use_cuda', type=int, default=0)
         parser.add_argument('--batch_size_S', type=int, default=64)
         parser.add_argument('--batch_size_D', type=int, default=64)
         parser.add_argument("--surrogate", type=str, default="WMF")
