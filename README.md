@@ -5,7 +5,7 @@ This repository contains our implementations for Shilling Attacks against Recomm
 Folder structure:
 - `AUSH`: The implementation of AUSH used in our CIKM'20 paper.
 - `Leg-UP`: The implementation of Leg-UP and a unified framework for comparing Leg-UP with various attackers including AIA, DCGAN, WGAN, Random Attack, Average Attack, Segment Attack and Bandwagon Attack.
-- `Data`: Recommendation datasets used in our experiments.
+- `data`: Recommendation datasets used in our experiments.
 
 See `README.md` in each folder for more details.
 

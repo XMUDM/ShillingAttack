@@ -16,7 +16,7 @@ More information will be provided when the paper is accepted.
 
 ## Data
 
-The datasets used in our experiments can be found in the [Data](../Data) folder.
+The datasets used in our experiments can be found in the [data](../data) folder.
 
 
 ## Command Line Parameters
