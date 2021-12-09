@@ -335,6 +335,9 @@ class WGANAttacker(Attacker):
         elif self.args.data_set == 'yelp':
             self.height = 104
             self.width = 111
+        else:
+            print("Unsupported dataset:", self.args.data_set)
+            exit(-1)
 
         self.z_dim = self.args.z_dim
         self.gf_dim = self.args.gf_dim
@@ -384,25 +387,10 @@ class WGANAttacker(Attacker):
         parser.add_argument('--learning_rate', type=float, default=0.0002)
         parser.add_argument('--beta1', type=float, default=0.5)
 
-        # if parser.data_set == 'ml100k':
-        # # ml100k
+        # default is ml100k. will be overwritten in the init function.
         parser.add_argument('--height', type=int, default=29)
         parser.add_argument('--width', type=int, default=58)
-        # elif parser.data_set == 'filmTrust':
-        # # filmTrust
-        #     parser.add_argument('--height', type=int, default=29)
-        #     parser.add_argument('--width', type=int, default=25)
-        # # automotive
-        # elif parser.data_set == 'automotive':
-        #     parser.add_argument('--height', type=int, default=41)
-        #     parser.add_argument('--width', type=int, default=45)
-        # elif parser.data_set == 'ToolHome':
-        #     parser.add_argument('--height', type=int, default=131)
-        #     parser.add_argument('--width', type=int, default=78)
-        # elif parser.data_set == 'GroceryFood':
-        #     parser.add_argument('--height', type=int, default=105)
-        #     parser.add_argument('--width', type=int, default=83)
-        #
+
         parser.add_argument('--z_dim', type=int, default=100)
         parser.add_argument('--gf_dim', type=int, default=64)
         parser.add_argument('--df_dim', type=int, default=64)
