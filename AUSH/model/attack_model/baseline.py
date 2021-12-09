@@ -23,7 +23,7 @@ class BaselineAttack:
         self.item_stds = item_stds
         self.r_max = r_max
         self.r_min = r_min
-        # 固定sample的filler
+
         self.fixed_filler_indicator = fixed_filler_indicator
 
     def RandomAttack(self):
@@ -36,7 +36,7 @@ class BaselineAttack:
             if self.fixed_filler_indicator is None:
                 fillers = np.random.choice(filler_candis, size=self.filler_num, replace=False)
             else:
-                # 读已有的sample结果
+
                 fillers = np.where(np.array(self.fixed_filler_indicator[i])== 1)[0]
             ratings = np.random.normal(loc=self.global_mean, scale=self.global_std, size=self.filler_num)
             for f_id, r in zip(fillers, ratings):
@@ -53,7 +53,7 @@ class BaselineAttack:
             if self.fixed_filler_indicator is None:
                 fillers = np.random.choice(filler_candis, size=self.filler_num, replace=False)
             else:
-                # 读已有的sample结果
+
                 fillers = np.where(np.array(self.fixed_filler_indicator[i])== 1)[0]
             ratings = np.random.normal(loc=self.global_mean, scale=self.global_std, size=self.filler_num)
             for f_id, r in zip(fillers, ratings):
@@ -71,7 +71,7 @@ class BaselineAttack:
             if self.fixed_filler_indicator is None:
                 fillers = np.random.choice(filler_candis, size=self.filler_num, replace=False)
             else:
-                # 读已有的sample结果
+
                 fillers = np.where(np.array(self.fixed_filler_indicator[i])== 1)[0]
             ratings = map(fn_normal, fillers)
             for f_id, r in zip(fillers, ratings):
@@ -88,7 +88,7 @@ class BaselineAttack:
             if self.fixed_filler_indicator is None:
                 fillers = np.random.choice(filler_candis, size=self.filler_num, replace=False)
             else:
-                # 读已有的sample结果
+
                 fillers = np.where(np.array(self.fixed_filler_indicator[i])== 1)[0]
             fake_profiles[i][fillers] = self.r_min
         return fake_profiles

@@ -50,14 +50,14 @@ dataset_class = ut.load_data.load_data.load_data(path_train=path_train, path_tes
 def train_Rec_model(injected_path, injected_profiles, target_id, model_path, train_epoch,
                     model_name='IAutoRec', warm_start=False, restore_path=None):
     tf.reset_default_graph()
-    # 写入文件
+
     attacked_file_writer(path_train, injected_path, injected_profiles, dataset_class.n_users)
-    # 读入文件
+
     dataset_class_injected = ut.load_data.load_data.load_data(path_train=injected_path,
                                                               path_test=path_test,
                                                               header=['user_id', 'item_id', 'rating'],
                                                               sep='\t', print_log=False)
-    # 训练模型
+
     # tf.reset_default_graph()
     tf_config = tf.ConfigProto()
     tf_config.gpu_options.allow_growth = True
@@ -79,37 +79,36 @@ def opt_adv_intent(fake_users, filler_indicators, target_id):
 
     # ----------------------
     for t in range(FLAGS.T):
-        # 计算当前的pred_shift:f_adv_0
-        injected_profiles = fake_users * filler_indicators  # filler_size限制
+
+        injected_profiles = fake_users * filler_indicators
         predictions, _ = train_Rec_model(injected_path, injected_profiles, target_id, model_path, 10)
         f_adv_0 = np.sum(predictions[target_users])
         f_adv_k = f_adv_0
         print("opt_adv_intent\tepoch-%d adv goal\t%f" % (t, f_adv_k))
-        # 计算k个方向的梯度
+
         delta_f_Adv = []
-        B, Sigma, V = la.svd(fake_users)  # 奇异值分解
+        B, Sigma, V = la.svd(fake_users)
         for k in range(FLAGS.K):
-            # 优化方向
+
             Z_k = np.matmul(np.reshape(B[k], [FLAGS.attack_num, 1]), np.reshape(V[k], [1, dataset_class.n_items]))
-            # 当前方向上的梯度
+
             fake_users_k = fake_users + FLAGS.alpha * Z_k
-            # 计算初始的pred_shift:f_adv_0
-            injected_profiles = fake_users_k * filler_indicators  # filler_size限制
+
+            injected_profiles = fake_users_k * filler_indicators
             predictions, _ = train_Rec_model(injected_path, injected_profiles, target_id, model_path,
                                              5, warm_start=True, restore_path=model_path)
             f_adv_k_new = np.sum(predictions[target_users])
-            # 步长*方向
+
             delta_f_Adv.append((f_adv_k_new - f_adv_k) * Z_k)
-        # 更新
-        delta_f_A = FLAGS.alpha * sum(delta_f_Adv)  # 公式9
-        # 最大化f_A
-        fake_users += FLAGS.eta * delta_f_A  # 公式5
-        fake_users[fake_users <= 0] = 0.5  # 公式6
-        fake_users[fake_users > 5] = 5  # 公式6
+
+        delta_f_A = FLAGS.alpha * sum(delta_f_Adv)
+        fake_users += FLAGS.eta * delta_f_A
+        fake_users[fake_users <= 0] = 0.5
+        fake_users[fake_users > 5] = 5
     return fake_users * filler_indicators
 
 
-"""step1.训练DCGAN，收敛后生成attack_size个fake user"""
+
 tf.reset_default_graph()
 with tf.Session(config=run_config) as sess:
     dcgan = DCGAN(sess, dataset_class)
@@ -118,7 +117,7 @@ with tf.Session(config=run_config) as sess:
     # save model
     saver = tf.train.Saver()
     saver.save(sess, './dcgan.ckpt')
-    # 生成attack_size个fake user
+
     fake_users = None
     while True:
         batch_z = gen_random(size=[FLAGS.batch_size, dcgan.z_dim]).astype(np.float32)
@@ -142,17 +141,17 @@ np.save('./fake_user_dcgan', [fake_users, filler_indicators])
 
 results = {}
 for target_id in target_ids:
-    """step2.根据攻击目标微调fake user"""
+
     injected_profiles = opt_adv_intent(fake_users, filler_indicators, target_id)
-    """step3.评估攻击效果"""
-    # 计算攻击结果并保存
+
+
     model_path = "./IAutoRec_dcgan_%d.ckpt" % target_id
     injected_path = "../data/data/ml100k_%d_dcgan_50_90.dat" % target_id
     target_users = attack_info[target_id][1]
     predictions, hit_ratios = train_Rec_model(injected_path, injected_profiles, target_id, model_path, 500)
     dst_path = "../result/pred_result/" + '_'.join(['IAutoRec', 'ml100k', str(target_id), 'dcgan'])
     target_prediction_writer(predictions, hit_ratios, dst_path)
-    # 评估攻击效果
+
     result = eval_attack('ml100k', 'IAutoRec', 'dcgan', target_id)
     results[target_id] = result
     print(target_id, result, '\n\n')

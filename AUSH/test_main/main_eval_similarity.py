@@ -138,13 +138,13 @@ def profiles_generator(target_id, dataset_class, attack_info, bandwagon_selected
 
 def parse_arg():
     parser = argparse.ArgumentParser()
-    # 数据集名称，用来选择训练数据路径
+
     parser.add_argument('--dataset', type=str, default='ml100k',
                         help='input data_set_name,filmTrust or ml100k grocery')
-    # 参数 - 攻击数量，即往数据集里插入多少假用户
+
     parser.add_argument('--attack_num', type=int, default=50,
                         help='num of attack fake user,50 for ml100k and filmTrust')
-    # 参数 - filler数量，可理解为是每个假用户有多少评分
+
     parser.add_argument('--filler_num', type=int, default=90,
                         help='num of filler items each fake user,90 for ml100k,36 for filmTrust')
     # filmTrust:5,395,181,565,254,601,623,619,64,558 - random*5+tail*5
@@ -163,8 +163,8 @@ def parse_arg():
 if __name__ == '__main__':
     """
     step1 - load data
-    step2 - 共所有攻击方法生成评分矩阵
-    step3 - 真假评分矩阵的距离度量
+    step2 - 
+    step3 - 
     """
 
     #
@@ -185,7 +185,7 @@ if __name__ == '__main__':
     result = None
     for target_id in args.targets:
         selected = attack_info[target_id][0]
-        """step2.1 - 生成固定的filler"""
+
         attackSetting_path = '_'.join(map(str, [args.dataset, sample_num, args.filler_num, target_id]))
         attackSetting_path = "../data/data_attacked/" + attackSetting_path + '_attackSetting'
         gan_attacker = Train_GAN_Attacker(dataset_class, params_D=None, params_G=None, target_id=target_id,
@@ -194,12 +194,12 @@ if __name__ == '__main__':
         _, real_profiles, filler_indicator = gan_attacker.execute(is_train=0, model_path='no',
                                                                   final_attack_setting=[sample_num, None, None])
         np.save(attackSetting_path, [real_profiles, filler_indicator])
-        """step2.2 - 为所有攻击方法生成评分矩阵"""
+
         fake_profiles_gan, baseline_fake_profiles, baseline_methods \
             = profiles_generator(target_id, dataset_class, attack_info, args.bandwagon_selected, sample_num, args,
                                  real_profiles, filler_indicator, pre_fix, has_G=True)
 
-        """step3 - 真假评分矩阵的距离度量"""
+
         # result_ = get_distance_result(target_id, real_profiles, fake_profiles_gan, baseline_fake_profiles,
         #                               baseline_methods)
         result_ = get_distance_result(target_id, dataset_class.train_matrix.toarray(), fake_profiles_gan,

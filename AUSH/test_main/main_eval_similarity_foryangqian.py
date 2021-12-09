@@ -120,13 +120,13 @@ def profiles_generator(target_id, dataset_class, attack_info, bandwagon_selected
 
 def parse_arg():
     parser = argparse.ArgumentParser()
-    # 数据集名称，用来选择训练数据路径
+
     parser.add_argument('--dataset', type=str, default='ml100k',
                         help='input data_set_name,filmTrust or ml100k grocery')
-    # 参数 - 攻击数量，即往数据集里插入多少假用户
+
     parser.add_argument('--attack_num', type=int, default=50,
                         help='num of attack fake user,50 for ml100k and filmTrust')
-    # 参数 - filler数量，可理解为是每个假用户有多少评分
+
     parser.add_argument('--filler_num', type=int, default=90,
                         help='num of filler items each fake user,90 for ml100k,36 for filmTrust')
     # filmTrust:5,395,181,565,254,601,623,619,64,558 - random*5+tail*5
@@ -146,8 +146,8 @@ def parse_arg():
 if __name__ == '__main__':
     """
     step1 - load data
-    step2 - 共所有攻击方法生成评分矩阵
-    step3 - 真假评分矩阵的距离度量
+    step2 - 
+    step3 - 
     """
 
     #
@@ -174,8 +174,8 @@ if __name__ == '__main__':
                                           attack_num=args.attack_num, filler_method=0)
         _, real_profiles, filler_indicator = gan_attacker.execute(is_train=0, model_path='no',
                                                                   final_attack_setting=[sample_num, None, None])
-        """step2.2 - 为所有攻击方法生成评分矩阵"""
-        # dcgan数据
+        """step2.2 - """
+
         dir = None
         fake_profiles_list = []
         method_list = []
@@ -188,7 +188,7 @@ if __name__ == '__main__':
             while fake_profiles_.shape[0] < dataset_class.n_users:
                 fake_profiles_ = np.concatenate([fake_profiles_, fake_profiles_])
             fake_profiles_ = fake_profiles_[:dataset_class.n_users]
-            # 同样的方法读入wgan数据
+
             path_wgan = dir + 'W-%s-ml100k\\ml100k_%d_wgan_50_90.dat' % (attack_method, target_id)
             dataset_class_dcgan = load_data(path_train=path_dcgan, path_test=path_test,
                                             header=['user_id', 'item_id', 'rating'],
@@ -200,7 +200,7 @@ if __name__ == '__main__':
             #
             fake_profiles_list += [fake_profiles_, fake_profiles_w]
             method_list += ['dcgan', 'wgan']
-        """step3 - 真假评分矩阵的距离度量"""
+        """step3 """
         result_ = get_distance_result(target_id, real_profiles, fake_profiles_list, method_list)
         result = result_ if result is None else pd.concat([result, result_])
     print(result)

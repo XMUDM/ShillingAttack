@@ -57,12 +57,12 @@ def baseline_attack(dataset_class, attack_info, attack_method, target_id, bandwa
 
 def parse_arg():
     parser = argparse.ArgumentParser()
-    # 数据集名称，用来选择训练数据路径
+
     parser.add_argument('--dataset', type=str, default='automotive', help='filmTrust/ml100k/grocery')
-    # 攻击方法，逗号隔开
+
     parser.add_argument('--attack_methods', type=str, default='average',
                         help='average,segment,random,bandwagon')
-    # 目标item，逗号隔开，这里前五个是随机target后五个是长尾target
+
     # filmTrust:random = [5, 395, 181, 565, 254]    tail = [601, 623, 619, 64, 558]
     # ml100k:random = [62, 1077, 785, 1419, 1257]   tail = [1319, 1612, 1509, 1545, 1373]
     # 1166,1574,759,494,549,1272,1728,1662,450,1456,595,566,764,1187,1816,1478,1721,2294,2413,1148
@@ -70,9 +70,9 @@ def parse_arg():
     # 88,22,122,339,1431,1141,1656,477,1089,866
     parser.add_argument('--targets', type=str, default='88,22,122,339,1431,1141,1656,477,1089,866',
                         help='attack_targets')
-    # 参数 - 攻击数量，即往数据集里插入多少假用户
+
     parser.add_argument('--attack_num', type=int, default=50, help='fixed 50')
-    # 参数 - filler数量，可理解为是每个假用户有多少评分
+
     parser.add_argument('--filler_num', type=int, default=4, help='90 for ml100k,36 for filmTrust')
     parser.add_argument('--bandwagon_selected', type=str, default='180,99,49',
                         help='180,99,49 for ml100k,103,98,115 for filmTrust')
@@ -94,9 +94,9 @@ if __name__ == '__main__':
 
     """attack"""
     dataset_class, attack_info = get_data(args.dataset)
-    # 对每种攻击方法&攻击目标，生成fake profile并写入目标路径
+
     for target_id in args.targets:
-        # 固定filler
+
         attackSetting_path = '_'.join(map(str, [args.dataset, args.attack_num, args.filler_num, target_id]))
         attackSetting_path = "../data/data_attacked/" + attackSetting_path + '_attackSetting'
         if args.sample_filler:
@@ -112,13 +112,13 @@ if __name__ == '__main__':
             real_profiles, filler_indicator = np.load(attackSetting_path + '.npy')
 
         # for attack_method in args.attack_methods:
-        #     """生成攻击"""
+        #
         #     attack_model = '_'.join([attack_method, str(args.attack_num), str(args.filler_num)])
         #     # fake_profiles = baseline_attack(dataset_class, attack_info, attack_model, target_id,
         #     #                                 args.bandwagon_selected, filler_indicator)
         #     fake_profiles = baseline_attack(dataset_class, attack_info, attack_model, target_id,
         #                                     args.bandwagon_selected, None)
-        #     """注入攻击"""
+        #
         #     ori_path = '../data/data/' + args.dataset + '_train.dat'
         #     dst_path = "../data/data_attacked/" + '_'.join([args.dataset, str(target_id), attack_model]) + "_sample.dat"
         #     attacked_file_writer(ori_path, dst_path, fake_profiles, dataset_class.n_users)

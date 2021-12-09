@@ -26,7 +26,7 @@ class load_data():
         self._main_load()
 
     def _main_load(self):
-        # load data 得到用户总数，item总数，dataframe格式的train,test,train_without vali,validate
+        # load data
         self._load_file()
         #
         # dataframe to matrix
@@ -40,7 +40,7 @@ class load_data():
                           ['user_id', 'item_id', 'rating']]
         self.test_data = pd.read_csv(self.path_test, sep=self.sep, names=self.header, engine='python').loc[:,
                          ['user_id', 'item_id', 'rating']]
-        # 不能保证每个item都有在训练集里出现
+
         self.n_users = len(set(self.test_data.user_id.unique()) | set(self.train_data.user_id.unique()))
         self.n_items = len(set(self.test_data.item_id.unique()) | set(self.train_data.item_id.unique()))
 

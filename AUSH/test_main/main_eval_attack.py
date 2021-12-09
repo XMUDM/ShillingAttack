@@ -74,19 +74,19 @@ def eval_attack(data_set_name, rec_model_name, attack_method, target_id):
 
 def parse_arg():
     parser = argparse.ArgumentParser()
-    # 数据集名称，用来选择训练数据路径
+
     parser.add_argument('--dataset', type=str, default='automotive', help='filmTrust/ml100k/office')
-    # 参数 - 攻击数量，即往数据集里插入多少假用户
+
     parser.add_argument('--attack_num', type=int, default=50, help='50 for ml100k and filmTrust')
-    # 参数 - filler数量，可理解为是每个假用户有多少评分
+
     parser.add_argument('--filler_num', type=int, default=4, help='90 for ml100k,36 for filmTrust')
-    # 攻击方法
+
     parser.add_argument('--attack_methods', type=str, default='G0,G1',
                         help='gan,G0,G1,segment,average,random,bandwagon')
-    # 目标模型
+
     parser.add_argument('--rec_model_names', type=str, default='NNMF,IAutoRec,UAutoRec,NMF_25',
                         help='NNMF,IAutoRec,UAutoRec,NMF_25')
-    # 目标item，逗号隔开，这里前五个是随机target后五个是长尾target
+
     # filmTrust:5,395,181,565,254,601,623,619,64,558 - random*5+tail*5
     # ml100k:62,1077,785,1419,1257,1319,1612,1509,1545,1373 - random*5+tail*5
     # 1166,1574,759,494,549,1272,1728,1662,450,1456,595,566,764,1187,1816,1478,1721,2294,2413,1148

@@ -7,17 +7,16 @@
 # import itertools, gzip
 import pandas as pd
 
-"""结果的含义"""
-# 前三列
+
 columns = ['Rec_model', 'attack_method', 'target_id']
-# 后面是攻击效果
+
 hr = ['HR_1', 'HR_3', 'HR_5', 'HR_10', 'HR_20', 'HR_50']
 hr_ori = [i + '_ori' for i in hr]
-# 段内用户的 预估分偏移量+攻击前的HR+攻击后的HR
+
 columns += [i + '_inseg' for i in ['shift'] + hr_ori + hr]
-# 全部用户的 预估分偏移量+攻击前的HR+攻击后的HR
+
 columns += [i + '_all' for i in ['shift'] + hr_ori + hr]
-# 需要统计的数值指标：
+
 columns_r = [i + '_inseg' for i in ['shift'] + hr] + [i + '_all' for i in ['shift'] + hr]
 """"""
 # data = pd.read_excel('filmTrust_distance.xls')

@@ -159,14 +159,14 @@ class DCGAN(object):
                                      [self.batch_size, self.height, self.width, 1],
                                      name='real_images')
         inputs = self.inputs
-        # 生成器
+
         self.z = tf.placeholder(tf.float32, [None, self.z_dim], name='z')
         self.G = self.generator(self.z)
-        # 判别器 - real&fake
+
         self.D, self.D_logits = self.discriminator(inputs, reuse=False)
         self.D_, self.D_logits_ = self.discriminator(self.G, reuse=True)
 
-        # 损失函数
+
         def sigmoid_cross_entropy_with_logits(x, y):
             try:
                 return tf.nn.sigmoid_cross_entropy_with_logits(logits=x, labels=y)
@@ -228,7 +228,7 @@ class DCGAN(object):
         with tf.variable_scope("discriminator") as scope:
             if reuse:
                 scope.reuse_variables()
-            # 论文中给的判别器结构:[conv+BN+LeakyRelu[64,128,256,512]]+[FC]+[sigmoid]
+            # [conv+BN+LeakyRelu[64,128,256,512]]+[FC]+[sigmoid]
             h0 = lrelu(conv2d(image, self.df_dim, name='d_h0_conv'))
             h1 = lrelu(self.d_bn1(conv2d(h0, self.df_dim * 2, name='d_h1_conv')))
             h2 = lrelu(self.d_bn2(conv2d(h1, self.df_dim * 4, name='d_h2_conv')))
