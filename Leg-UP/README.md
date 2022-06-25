@@ -3,7 +3,21 @@
 
 This repository contains our implementation for Leg-UP (<ins>Le</ins>arning to <ins>G</ins>enerate Fake <ins>U</ins>ser <ins>P</ins>rofiles) and various shilling attack methods including AIA, DCGAN, WGAN, Random Attack, Average Attack, Segment Attack and Bandwagon Attack. 
 
-More information will be provided when the paper is accepted.
+Please kindly cite our paper [[IEEE Xplore](https://ieeexplore.ieee.org/document/9806457)] [[arXiv Preprint](https://arxiv.org/abs/2206.11433)] if you use it:
+
+> Chen Lin, Si Chen, Meifang Zeng, Sheng Zhang, Min Gao, and Hui Li. 2022. Shilling Black-Box Recommender Systems by Learning to Generate Fake User Profiles. In TNNLS.
+
+    @article{LinCZZGL22,
+	  author    = {Chen Lin and
+	               Si Chen and
+	               Meifang Zeng and
+	               Sheng Zhang and
+	               Min Gao and
+	               Hui Li},
+	  title     = {Shilling Black-Box Recommender Systems by Learning to Generate Fake User Profiles},
+	  journal   = {{IEEE} Trans. Neural Networks Learn. Syst.},
+	  year      = {2022}
+	}
 
 ## Environment
 - Python 3.8

@@ -2,7 +2,7 @@
 
 # Attacking Recommender Systems with Augmented User Profiles
 
-This repository contains one shilling attack algorithm, AUSH, published in the following paper [[ACM Library](https://dl.acm.org/doi/10.1145/3340531.3411884)] [[Arxiv Preprint](https://arxiv.org/abs/2005.08164)]:
+This repository contains one shilling attack algorithm, AUSH, published in the following paper [[ACM Library](https://dl.acm.org/doi/10.1145/3340531.3411884)] [[arXiv Preprint](https://arxiv.org/abs/2005.08164)]:
 
 > Chen Lin, Si Chen, Hui Li, Yanghua Xiao, Lianyun Li, and Qian Yang. 2020. Attacking Recommender Systems with Augmented User Profiles. In CIKM. 855–864.
 
